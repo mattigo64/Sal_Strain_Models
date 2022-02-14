@@ -1,0 +1,120 @@
+library(readxl)
+WM = read_excel("~/Dropbox/Matt Igo - Schaffner Lab/Dissertation/Lab Strain Survival Experiments/Results/Whole Milk Powder Survival Experiments.xlsx", 
+                sheet = "R Models Avg")
+
+library(caret)
+model1 = lm(`PT30-B`~Time, data = WM)
+summary(model1)
+AIC(model1)
+pred1=predict(model1,WM)
+RMSE(pred1,WM$`PT30-B`)
+plot(model1)
+
+model2 = lm(`PT13a-B`~Time, data = WM)
+summary(model2)
+AIC(model2)
+pred2=predict(model2,WM)
+RMSE(pred2,WM$`PT13a-B`)
+
+model3 = lm(`LJH1234-B`~Time, data = WM)
+summary(model3)
+AIC(model3)
+pred3=predict(model3,WM)
+RMSE(pred3,WM$`LJH1234-B`)
+
+model4 = lm(`LJH614-B`~Time, data = WM)
+summary(model4)
+AIC(model4)
+pred4=predict(model4,WM)
+RMSE(pred4,WM$`LJH614-B`)
+
+model5 = lm(`DT104-B`~Time, data = WM)
+summary(model5)
+AIC(model5)
+pred5=predict(model5,WM)
+RMSE(pred5,WM$`DT104-B`)
+
+model6 = lm(`FSIS-B`~Time, data = WM)
+summary(model6)
+AIC(model6)
+pred6=predict(model6,WM)
+RMSE(pred6,WM$`FSIS-B`)
+
+model7 = lm(`CT-B`~Time, data = WM)
+summary(model7)
+AIC(model7)
+pred7=predict(model7,WM)
+RMSE(pred7,WM$`CT-B`)
+
+weib1 = nls(`PT30-B`~NO - (Time/delta)^p, start = list(delta =5, p=1, NO=5), trace = T, data = WM)
+summary(weib1)
+AIC(weib1)
+anova(weib1,model1)
+RMSE(predw1,WM$`PT30-B`)
+anova(weib1,model1)
+plot(`PT30-B`~Time, data =WM)
+lines(Time, data = WM, predict(weib), col='blue')
+
+weib2 = nls(`PT13a-B`~NO - (Time/delta)^p, start = list(delta =5, p=1, NO=5), trace = T, data = WM)
+summary(weib2)
+AIC(weib2)
+anova(weib2,model2)
+predw2=predict(weib2,WM)
+RMSE(predw2,WM$`PT13a-B`)
+
+weib3 = nls(`LJH1234-B`~NO - (Time/delta)^p, start = list(delta =5, p=1, NO=5), trace = T, data = WM)
+summary(weib3)
+AIC(weib3)
+anova(weib3,model3)
+predw3=predict(weib3,WM)
+RMSE(predw3,WM$`LJH1234-B`)
+
+weib4 = nls(`LJH614-B`~NO - (Time/delta)^p, start = list(delta =5, p=1, NO=5), trace = T, data = WM)
+summary(weib4)
+AIC(weib4)
+anova(weib4,model4)
+predw4=predict(weib4,WM)
+RMSE(predw4,WM$`LJH614-B`)
+
+weib5 = nls(`DT104-B`~NO - (Time/delta)^p, start = list(delta =5, p=1, NO=5), trace = T, data = WM)
+summary(weib5)
+AIC(weib5)
+anova(weib5,model5)
+predw5=predict(weib5,WM)
+RMSE(predw5,WM$`DT104-B`)
+
+weib6 = nls(`FSIS-B`~NO - (Time/delta)^p, start = list(delta =5, p=1, NO=5), trace = T, data = WM)
+summary(weib6)
+AIC(weib6)
+anova(weib6,model6)
+predw6=predict(weib6,WM)
+RMSE(predw6,WM$`FSIS-B`)
+
+weib7 = nls(`CT-B`~NO - (Time/delta)^p, start = list(delta =5, p=1, NO=5), trace = T, data = WM)
+summary(weib7)
+AIC(weib7)
+anova(weib7,model7)
+predw7=predict(weib7,WM)
+RMSE(predw7,WM$`CT-B`)
+
+
+#################################
+
+
+model1 = lm(N1~Time)
+model2 = lm(N~Time)
+summary(model1)
+
+AIC(weib)
+AIC(weib2)
+summary(weib)
+anova(model2,model1)
+library(rcompanion)
+nagelkerke(weib, null = model1)
+summary(weib)$r.squared
+BIC(weib)
+BIC(weib2)
+plot(Time, N1)
+lines(Time, predict(weib), col='blue')
+cor(N, predict(weib))
+?cor
